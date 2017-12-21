@@ -1,20 +1,7 @@
 <template>
   <mt-tabbar fixed v-model="selected">
-    <mt-tab-item id="首页">
-      <img slot="icon" src="../assets/logo.png">
-      首页
-    </mt-tab-item>
-    <mt-tab-item id="消息">
-      <img slot="icon" src="../assets/logo.png">
-      消息
-    </mt-tab-item>
-    <mt-tab-item id="什么">
-      <img slot="icon" src="../assets/logo.png">
-      什么
-    </mt-tab-item>
-    <mt-tab-item id="我的">
-      <img slot="icon" src="../assets/logo.png">
-      我的
+    <mt-tab-item v-for="(tab, idx) in tabs" :id="tab.id" :key="tab.id+idx">
+      <img slot="icon" src="../assets/logo.png">{{tab.name}}<mt-badge v-if="tab.badge" size="normal" type="error">10</mt-badge>
     </mt-tab-item>
   </mt-tabbar>
 </template>
@@ -23,19 +10,52 @@
 export default {
   data: function () {
     return {
-      selected: ''
+      tabs: [
+        {
+          id: 'home',
+          name: '首页',
+          path: '/'
+        },
+        {
+          id: 'messages',
+          name: '消息',
+          path: '/messages',
+          badge: true
+        },
+        {
+          id: 'what',
+          name: '什么',
+          path: '/what'
+        },
+        {
+          id: 'mypage',
+          name: '我的',
+          path: '/mypage'
+        }
+      ]
     }
   },
-  watch: {
-    'this.$route.path': function (val, oldVal) {
-      console.log('!')
-      switch (val) {
-        case '/':
-          this.selected = '首页'
-          break
-        default:
-          this.selected = '消息'
-          break
+  methods: {
+    routeTo (path, ...args) {
+      this.$router.push(path, ...args)
+    }
+  },
+  computed: {
+    selected: {
+      get: function () {
+        console.log('Now in ' + this.$route.path)
+        let tabs = this.tabs
+        let currentPath = this.$route.name
+        let res = tabs.filter(t => currentPath === t.id)
+        if (res.length <= 0) {
+          return ''
+        }
+        return res[0].id
+      },
+      set: function (val) {
+        let tabs = this.tabs
+        let res = tabs.filter(t => t.id === val)
+        return res.length ? this.routeTo('/' + res[0].id) : this.routeTo('/')
       }
     }
   }

@@ -2,8 +2,8 @@
   <div class="content-wrapper">
     <h1>{{details.title}}</h1>
     <div class="author-info">
-      <img class="avatar" :src="details.author.avatar_url" />
-      <span>{{details.author.loginname}}</span>
+      <img class="avatar-small" :src="details.author.avatar_url" />
+      <router-link :to="'/user/' + details.author.loginname">{{details.author.loginname}}</router-link>
       <span>发布于</span>
       <span>{{details.create_at | timeAgo}}</span>
       <br>
@@ -12,8 +12,8 @@
     </div>
     <div v-html="details.content" class="content-body markdown-body"></div>
     <h1>评论</h1>
-    <div v-for="reply in details.replies" class="reply markdown-body">
-      <img class="avatar" :src="reply.author.avatar_url" />
+    <div v-for="(reply, idx) in details.replies" class="reply markdown-body" :key="idx">
+      <img class="avatar-medium" :src="reply.author.avatar_url" />
       <span><b>{{reply.author.loginname}}</b></span>
       <span>@</span>
       <span>{{reply.create_at | timeAgo}}</span>
@@ -26,18 +26,26 @@
 import axios from 'axios'
 import localeDate from '@/utils/date'
 import mapping from '@/utils/mapping'
+import { Indicator } from 'mint-ui'
 
 export default {
   data: function () {
     return {
-      details: {}
+      loading: true,
+      details: {
+        author: {
+          avatar_url: '#'
+        }
+      }
     }
   },
   props: ['id'],
   created () {
+    Indicator.open()
     axios.get('https://cnodejs.org/api/v1/topic/' + this.id)
     .then(res => {
       this.details = res.data.data
+      Indicator.close()
     })
   },
   filters: {
@@ -69,12 +77,6 @@ export default {
   }  
 
   .author-info{
-    .avatar {
-      width: 20px;
-      height: 20px;
-      border-radius: 2px;
-    }
-    
     span {
       text-align: center;
     }
@@ -85,11 +87,6 @@ export default {
   .reply {
     border-bottom: 1px solid black;
     margin-bottom: 10px;
-    .avatar {
-      width: 30px;
-      height: 30px;
-      border-radius: 5px;
-    }
   }
 
   

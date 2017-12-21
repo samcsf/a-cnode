@@ -1,16 +1,15 @@
 <template>
   <div id="app">
-    <!-- <router-view/> -->
     <mt-header fixed title="A-CNode" style="background-color:lightseagreen"> 
-      <router-link to="/" slot="left" tag="mt-button">Home</router-link>
-      <mt-button icon="more" slot="right"></mt-button>
+      <router-link tag='span' slot="right" style="font-size:18px;cursor:pointer;" to="/post">+</router-link>
     </mt-header>
     <router-view></router-view>
-    <vfooter/>
+    <v-footer/>
   </div>
 </template>
 
 <script>
+import {mapActions} from 'vuex'
 import Footer from '@/components/Footer'
 
 export default {
@@ -19,7 +18,13 @@ export default {
     return {}
   },
   components: {
-    vfooter: Footer
+    'v-footer': Footer
+  },
+  methods: {
+    ...mapActions(['fetchTopicsWithDetail'])
+  },
+  created () {
+    this.fetchTopicsWithDetail()
   }
 }
 </script>
