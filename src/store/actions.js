@@ -13,7 +13,7 @@ export default {
     return res.data
   },
   fetchTopics: async function ({commit, state}, opts) {
-    axios.get('https://cnodejs.org/api/v1/topics')
+    return axios.get('https://cnodejs.org/api/v1/topics')
     .then(res => {
       console.log('Fetch topics @' + new Date().toLocaleString())
       let topics = res.data.data.map(t => {
@@ -24,7 +24,7 @@ export default {
     })
   },
   fetchTopicsWithDetail: async function ({commit, state}, opts) {
-    axios.get('https://cnodejs.org/api/v1/topics')
+    return axios.get('https://cnodejs.org/api/v1/topics')
     .then(res => {
       console.log('Fetch topics @' + new Date().toLocaleString())
       let topics = res.data.data.map(t => {
@@ -51,19 +51,19 @@ export default {
     })
   },
   getMessages: async function ({commit, state}, opts) {
-    axios.get('https://cnodejs.org/api/v1/messages?accesstoken=' + state.token)
+    return axios.get('https://cnodejs.org/api/v1/messages?accesstoken=' + state.token)
     .then(res => {
       state.messages = res.data.data
     }).catch(err => console.log(err))
   },
   getMessageCount: async function ({commit, state}, opts) {
-    axios.get('https://cnodejs.org/api/v1/message/count?accesstoken=' + state.token)
+    return axios.get('https://cnodejs.org/api/v1/message/count?accesstoken=' + state.token)
     .then(res => {
       state.messageCount = res.data.data
     }).catch(err => console.log(err))
   },
   login: async function ({commit, state, dispatch}, token) {
-    dispatch('validateToken', token)
+    return dispatch('validateToken', token)
     .then(res => {
       if (!res) {
         return Toast('Token 错误')
