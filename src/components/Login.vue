@@ -6,6 +6,8 @@
 </template>
 
 <script>
+import {Toast} from 'mint-ui'
+import store from '../store'
 export default {
   data: function () {
     return {
@@ -13,18 +15,22 @@ export default {
     }
   },
   beforeRouteEnter: (to, from, next) => {
-    next(vm => {
-      console.log('From ' + from.name)
-      vm.fromRoute = from.name
-    })
+    if (store.state.isLogin) {
+      Toast({message: '已登录', duration: 1000})
+      return next(to.query.to || 'home')
+    }
   },
   methods: {
     onSubmit () {
-      // do sth
       console.log('Submitted with token ' + this.inputToken)
       this.$store.dispatch('login', this.inputToken)
       .then(res => {
-        this.$router.push(this.fromRoute)
+        Toast({message: '登录成功', duration: 1000})
+        this.$router.push(this.$route.query.to || 'home')
+      })
+      .catch(e => {
+        Toast({message: 'Token 错误, 请重新输入', duration: 1000})
+        console.log('Error when login: ' + e)
       })
     }
   }

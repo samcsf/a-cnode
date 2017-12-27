@@ -1,5 +1,4 @@
 import axios from 'axios'
-import {Toast} from 'mint-ui'
 
 export default {
   validateToken: async function ({commit, state}, token) {
@@ -66,13 +65,9 @@ export default {
     return dispatch('validateToken', token)
     .then(res => {
       if (!res) {
-        return Toast('Token 错误')
+        throw new Error('Invaild token.')
       }
       commit('initUserData', {token, user: res})
-      Toast({
-        message: '登录成功',
-        duration: 1000
-      })
       dispatch('getMessages')
       dispatch('getMessageCount')
     })

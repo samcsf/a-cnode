@@ -10,6 +10,7 @@
 
 <script>
 import {mapActions} from 'vuex'
+import {Toast} from 'mint-ui'
 import Footer from '@/components/Footer'
 
 export default {
@@ -21,10 +22,22 @@ export default {
     'v-footer': Footer
   },
   methods: {
-    ...mapActions(['fetchTopicsWithDetail'])
+    ...mapActions(['fetchTopicsWithDetail', 'login'])
   },
   created () {
     this.fetchTopicsWithDetail()
+    // check local storage, whether there's existing token
+    let token = window.localStorage.getItem('acnode_token')
+    if (token) {
+      console.log('Try to login with local token: ' + token)
+      this.login(token)
+      .then(res => {
+        Toast({message: '自动登录成功', duration: 1000})
+      })
+      .catch(e => {
+        // Toast({message: '自动登录失败', duration: 2000})
+      })
+    }
   }
 }
 </script>

@@ -15,7 +15,10 @@ Vue.use(Router)
 function loginCheck (to, from, next) {
   if (!store.state.isLogin) {
     Toast({message: '请先登录', duration: 1000})
-    return next('/login')
+    return next({
+      path: '/login',
+      query: { to: to.name || '' }
+    })
   }
   return next()
 }

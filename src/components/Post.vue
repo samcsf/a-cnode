@@ -15,7 +15,7 @@ export default {
     return {
       inputTitle: '',
       inputContent: '',
-      tabs: ['分享','问答','测试']
+      tabs: ['分享', '问答', '测试']
     }
   }
 }
