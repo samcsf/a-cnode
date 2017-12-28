@@ -59,6 +59,7 @@ export default {
     return axios.get('https://cnodejs.org/api/v1/message/count?accesstoken=' + state.token)
     .then(res => {
       state.messageCount = res.data.data
+      console.log('Message count updated @' + new Date().toLocaleString())
     }).catch(err => console.log(err))
   },
   login: async function ({commit, state, dispatch}, token) {
@@ -67,7 +68,9 @@ export default {
       if (!res) {
         throw new Error('Invaild token.')
       }
-      commit('initUserData', {token, user: res})
+      // update message count per minute
+      let msgSchId = setInterval(() => dispatch('getMessageCount'), 1000 * 60)
+      commit('initUserData', {token, user: res, msgSchId})
       dispatch('getMessages')
       dispatch('getMessageCount')
     })

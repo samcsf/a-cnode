@@ -14,7 +14,8 @@ const state = {
     has_read_messages: [],
     hasnot_read_messages: []
   },
-  messageCount: 0
+  messageCount: 0,
+  msgSchId: ''
 }
 
 export default new Vuex.Store({

@@ -7,12 +7,14 @@ export default {
     state.token = ''
     state.user = null
     state.isLogin = false
+    clearInterval(state.msgSchId)
     window.localStorage.removeItem('acnode_token')
   },
-  initUserData: function (state, {user, token}) {
+  initUserData: function (state, {user, token, msgSchId}) {
     state.token = token
     state.user = user
     state.isLogin = true
+    state.msgSchId = msgSchId
     window.localStorage.setItem('acnode_token', token)
   }
 }
