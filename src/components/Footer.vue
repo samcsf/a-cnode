@@ -1,12 +1,13 @@
 <template>
   <mt-tabbar fixed v-model="selected">
     <mt-tab-item v-for="(tab, idx) in tabs" :id="tab.id" :key="tab.id+idx">
-      <img slot="icon" src="../assets/logo.png">{{tab.name}}<mt-badge v-if="tab.badge" size="normal" type="error">10</mt-badge>
+      <img slot="icon" src="../assets/logo.png">{{tab.name}}<mt-badge v-if="needShowBadge(tab)" size="normal" type="error">{{getBadge(tab)}}</mt-badge>
     </mt-tab-item>
   </mt-tabbar>
 </template>
 
 <script>
+import {mapState} from 'vuex'
 export default {
   data: function () {
     return {
@@ -38,9 +39,24 @@ export default {
   methods: {
     routeTo (path, ...args) {
       this.$router.push(path, ...args)
+    },
+    getBadge ({id}) {
+      switch (id) {
+        case 'messages':
+          return this.messageCount
+        default:
+          return 0
+      }
+    },
+    needShowBadge ({badge: flag, id}) {
+      if (!flag) {
+        return false
+      }
+      return this.getBadge({id}) > 0
     }
   },
   computed: {
+    ...mapState(['messageCount']),
     selected: {
       get: function () {
         console.log('Now in ' + this.$route.path)
