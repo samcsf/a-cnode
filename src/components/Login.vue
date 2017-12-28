@@ -19,6 +19,7 @@ export default {
       Toast({message: '已登录', duration: 1000})
       return next(to.query.to || 'home')
     }
+    next()
   },
   methods: {
     onSubmit () {
