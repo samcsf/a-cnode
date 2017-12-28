@@ -15,7 +15,10 @@ const state = {
     hasnot_read_messages: []
   },
   messageCount: 0,
-  msgSchId: ''
+  msgSchId: '',
+  config: {
+    pageLimit: 20
+  }
 }
 
 export default new Vuex.Store({

@@ -3,6 +3,9 @@ export default {
     state.topics.splice(0)
     state.topics = topics
   },
+  appendTopics: function (state, topics) {
+    state.topics = state.topics.concat(topics)
+  },
   logout: function (state) {
     state.token = ''
     state.user = null

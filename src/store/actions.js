@@ -12,18 +12,36 @@ export default {
     return res.data
   },
   fetchTopics: async function ({commit, state}, opts) {
-    return axios.get('https://cnodejs.org/api/v1/topics')
+    if (!opts.limit) {
+      opts.limit = state.config.pageLimit
+    }
+    return axios.get('https://cnodejs.org/api/v1/topics', {
+      params: {
+        ...opts
+      }
+    })
     .then(res => {
       console.log('Fetch topics @' + new Date().toLocaleString())
       let topics = res.data.data.map(t => {
         t.last_reply_avatar = ''
         return t
       })
-      commit('refreshTopics', topics)
+      if (opts.refresh) {
+        commit('refreshTopics', topics)
+      } else {
+        commit('appendTopics', topics)
+      }
     })
   },
   fetchTopicsWithDetail: async function ({commit, state}, opts) {
-    return axios.get('https://cnodejs.org/api/v1/topics')
+    if (!opts.limit) {
+      opts.limit = state.config.pageLimit
+    }
+    return axios.get('https://cnodejs.org/api/v1/topics', {
+      params: {
+        ...opts
+      }
+    })
     .then(res => {
       console.log('Fetch topics @' + new Date().toLocaleString())
       let topics = res.data.data.map(t => {
@@ -46,7 +64,11 @@ export default {
         })
       })
       console.log('Reply avatars loaded.')
-      commit('refreshTopics', topics)
+      if (opts.refresh) {
+        commit('refreshTopics', topics)
+      } else {
+        commit('appendTopics', topics)
+      }
     })
   },
   getMessages: async function ({commit, state}, opts) {

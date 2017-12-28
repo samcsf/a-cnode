@@ -25,7 +25,7 @@ export default {
     ...mapActions(['fetchTopicsWithDetail', 'login'])
   },
   created () {
-    this.fetchTopicsWithDetail()
+    this.fetchTopicsWithDetail({page: 1, refresh: true})
     // check local storage, whether there's existing token
     let token = window.localStorage.getItem('acnode_token')
     if (token) {
