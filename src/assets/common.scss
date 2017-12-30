@@ -24,6 +24,13 @@
   height: 15px;
 }
 
+.avatar-circle {
+  border-radius: 50%;
+  border: 1px solid lightgrey;
+  width: 120px;
+  height: 120px;
+}
+
 .info-block {
   margin-top: 20px;
   display: flex;
@@ -58,4 +65,13 @@ li {
 .icon {
   width: 15px;
   height: 15px;
+}
+
+.acn-cell {
+  width: 100%;
+  border-top: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
+  background-color: white;
+  padding: 10px 10px;
+  margin-bottom: -1px;
 }

@@ -1,10 +1,13 @@
 <template>
-  <div>
-    <h1>My Page</h1>
-    <img :src="user.avatar_url">
-    <div>Name:{{user.loginname}}</div>
-    <div>Id:{{user.id}}</div>
-    <button @click="logout">Log out</button>
+  <div class="wrapper">
+    <div class="acn-cell">
+      <img class="avatar-circle" :src="user.avatar_url">
+      <span class="content">{{user.loginname}}</span>
+    </div>
+    <div class="acn-cell" style="margin-top: 20px">用户ID:{{user.id}}</div>
+    <div class="acn-cell">收藏文章</div>
+    <div class="acn-cell">阅读历史</div>
+    <div class="acn-cell" @click="logout">登出</div>
   </div>
 </template>
 
@@ -36,3 +39,10 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.wrapper{
+  height: calc(100vh - 90px);
+}
+
+</style>
