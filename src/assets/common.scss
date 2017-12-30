@@ -1,0 +1,77 @@
+@import './mixin.scss';
+
+.avatar-medium {
+  border-radius: 5px;
+  width: 30px;
+  height: 30px;
+}
+
+.avatar-large {
+  border-radius: 5px;
+  width: 120px;
+  height: 120px;
+}
+
+.avatar-small {
+  border-radius: 2px;
+  width: 24px;
+  height: 24px;
+}
+
+.avatar-tiny {
+  border-radius: 2px;
+  width: 15x;
+  height: 15px;
+}
+
+.avatar-circle {
+  border-radius: 50%;
+  border: 1px solid lightgrey;
+  width: 120px;
+  height: 120px;
+}
+
+.info-block {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  .info-header {
+    font-weight: bold;
+    border-bottom: 1px solid black;
+  }
+
+  .info-entry {
+    width: 300px;
+    @include shorten-text;
+  }
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  display: block;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon {
+  width: 15px;
+  height: 15px;
+}
+
+.acn-cell {
+  width: 100%;
+  border-top: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
+  background-color: white;
+  padding: 10px 10px;
+  margin-bottom: -1px;
+}
