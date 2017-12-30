@@ -1,6 +1,7 @@
 <template>
   <mt-loadmore :top-method="loadTop" ref="loadmore"> 
-    <ul  v-infinite-scroll="loadMore"
+    <ul id="topic-list"
+      v-infinite-scroll="loadMore"
       infinite-scroll-disabled="loading"
       infinite-scroll-distance="0"
       infinite-scroll-immediate-check="false">
@@ -112,7 +113,7 @@ export default {
 </script>
 
 <style lang="scss">
-.topic-cell:first-child {
+#topic-list {
   margin-top: 5px;
 }
 
