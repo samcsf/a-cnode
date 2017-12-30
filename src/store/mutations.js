@@ -19,5 +19,11 @@ export default {
     state.isLogin = true
     state.msgSchId = msgSchId
     window.localStorage.setItem('acnode_token', token)
+  },
+  initPage: function (state) {
+    state.topicPage = 1
+  },
+  nextPage: function (state) {
+    state.topicPage++
   }
 }

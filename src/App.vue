@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-    <mt-header fixed title="A-CNode" style="background-color:lightseagreen"> 
-      <router-link tag='span' slot="right" style="font-size:18px;cursor:pointer;" to="/post">+</router-link>
-    </mt-header>
+    <v-header/>
     <router-view></router-view>
     <v-footer/>
   </div>
@@ -12,6 +10,7 @@
 import {mapActions} from 'vuex'
 import {Toast} from 'mint-ui'
 import Footer from '@/components/Footer'
+import Header from '@/components/Header'
 
 export default {
   name: 'app',
@@ -19,7 +18,8 @@ export default {
     return {}
   },
   components: {
-    'v-footer': Footer
+    'v-footer': Footer,
+    'v-header': Header
   },
   methods: {
     ...mapActions(['fetchTopicsWithDetail', 'login'])

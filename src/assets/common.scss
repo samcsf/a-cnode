@@ -18,6 +18,12 @@
   height: 24px;
 }
 
+.avatar-tiny {
+  border-radius: 2px;
+  width: 15x;
+  height: 15px;
+}
+
 .info-block {
   margin-top: 20px;
   display: flex;
@@ -47,4 +53,9 @@ li {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.icon {
+  width: 15px;
+  height: 15px;
 }

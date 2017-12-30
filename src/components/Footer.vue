@@ -1,5 +1,5 @@
 <template>
-  <mt-tabbar fixed v-model="selected">
+  <mt-tabbar fixed v-model="selected" v-if="showBar">
     <mt-tab-item v-for="(tab, idx) in tabs" :id="tab.id" :key="tab.id+idx">
       <img slot="icon" src="../assets/logo.png">{{tab.name}}<mt-badge v-if="needShowBadge(tab)" size="normal" type="error">{{getBadge(tab)}}</mt-badge>
     </mt-tab-item>
@@ -73,6 +73,10 @@ export default {
         let res = tabs.filter(t => t.id === val)
         return res.length ? this.routeTo('/' + res[0].id) : this.routeTo('/')
       }
+    },
+    showBar () {
+      let current = this.$route.name
+      return current !== 'content' && current !== 'post' && current !== 'user'
     }
   }
 }

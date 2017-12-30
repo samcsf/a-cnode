@@ -18,7 +18,8 @@ const state = {
   msgSchId: '',
   config: {
     pageLimit: 20
-  }
+  },
+  topicPage: 1
 }
 
 export default new Vuex.Store({

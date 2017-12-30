@@ -12,11 +12,14 @@
     </div>
     <div v-html="details.content" class="content-body markdown-body"></div>
     <h1>评论</h1>
+    <h2 v-if="!details.replies || details.replies.length<=0">暂无评论</h2>
     <div v-for="(reply, idx) in details.replies" class="reply markdown-body" :key="idx">
-      <img class="avatar-medium" :src="reply.author.avatar_url" />
-      <span><b>{{reply.author.loginname}}</b></span>
+      <router-link :to="'/user/' + reply.author.loginname"><img class="avatar-medium" :src="reply.author.avatar_url" /></router-link>
+      <router-link :to="'/user/' + reply.author.loginname"><b>{{reply.author.loginname}}</b></router-link>
       <span>@</span>
       <span>{{reply.create_at | timeAgo}}</span>
+      <a href="#">赞</a>
+      <a href="#">回</a>
       <div v-html="reply.content" />
     </div>
   </div>
