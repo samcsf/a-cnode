@@ -50,8 +50,8 @@ export default new Router({
       beforeEnter: loginCheck
     },
     {
-      path: '/what',
-      name: 'what'
+      path: '/collection',
+      name: 'collection'
     },
     {
       path: '/mypage',

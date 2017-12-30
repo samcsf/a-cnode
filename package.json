@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "axios": "^0.17.1",
+    "bootstrap": "^3.3.7",
     "express": "^4.16.2",
     "mint-ui": "^2.2.13",
     "moment": "^2.19.4",

@@ -52,6 +52,16 @@ export default {
   margin-bottom: 60px;
 }
 
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: none;
+}
+a:focus {
+  text-decoration: none;
+}
+
 body{
 }
 </style>

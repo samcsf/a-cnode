@@ -1,7 +1,9 @@
 <template>
   <mt-tabbar fixed v-model="selected" v-if="showBar">
-    <mt-tab-item v-for="(tab, idx) in tabs" :id="tab.id" :key="tab.id+idx">
-      <img slot="icon" src="../assets/logo.png">{{tab.name}}<mt-badge v-if="needShowBadge(tab)" size="normal" type="error">{{getBadge(tab)}}</mt-badge>
+    <mt-tab-item v-for="(tab, idx) in tabs" :id="tab.id" :key="tab.id+idx" class="custom-tab">
+      <span slot="icon" :class="tab.class" style="font-size:25px;color:grey;"></span>
+      {{tab.name}}
+      <mt-badge v-if="needShowBadge(tab)" size="normal" type="error">{{getBadge(tab)}}</mt-badge>
     </mt-tab-item>
   </mt-tabbar>
 </template>
@@ -15,23 +17,27 @@ export default {
         {
           id: 'home',
           name: '首页',
-          path: '/'
+          path: '/',
+          class: 'glyphicon glyphicon-home'
         },
         {
           id: 'messages',
           name: '消息',
           path: '/messages',
-          badge: true
+          badge: true,
+          class: 'glyphicon glyphicon-envelope'
         },
         {
-          id: 'what',
-          name: '什么',
-          path: '/what'
+          id: 'collection',
+          name: '收藏',
+          path: '/collection',
+          class: 'glyphicon glyphicon-star'
         },
         {
           id: 'mypage',
           name: '我的',
-          path: '/mypage'
+          path: '/mypage',
+          class: 'glyphicon glyphicon-user'
         }
       ]
     }
