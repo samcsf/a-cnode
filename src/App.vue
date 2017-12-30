@@ -52,6 +52,10 @@ export default {
   margin-bottom: 60px;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 a {
   text-decoration: none;
 }
@@ -63,5 +67,6 @@ a:focus {
 }
 
 body{
+  background-color: #f8f8f8;
 }
 </style>

@@ -118,8 +118,10 @@ export default {
 }
 
 .topic-cell {
-  border-bottom: 1px solid #7f8c8d;
-  margin-bottom: 10px;
+  background-color: white;
+  border-bottom: 1px solid lightgray;
+  margin-bottom: 5px;
+  padding: 5px;
   .detail {
     display: flex;
     flex-direction: row;
@@ -128,7 +130,6 @@ export default {
     .content {
       display: flex;
       flex-direction: column;
-      // padding-top: 5px;
       padding-left: 5px;
       font-size: 10px;
       a {
