@@ -15,6 +15,7 @@ export default {
     if (!opts.limit) {
       opts.limit = state.config.pageLimit
     }
+    opts.tab = state.topicTab
     return axios.get('https://cnodejs.org/api/v1/topics', {
       params: {
         ...opts
@@ -37,6 +38,7 @@ export default {
     if (!opts.limit) {
       opts.limit = state.config.pageLimit
     }
+    opts.tab = state.topicTab
     return axios.get('https://cnodejs.org/api/v1/topics', {
       params: {
         ...opts

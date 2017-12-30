@@ -25,5 +25,8 @@ export default {
   },
   nextPage: function (state) {
     state.topicPage++
+  },
+  switchTab: function (state, tab) {
+    state.topicTab = tab
   }
 }

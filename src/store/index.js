@@ -19,7 +19,8 @@ const state = {
   config: {
     pageLimit: 20
   },
-  topicPage: 1
+  topicPage: 1,
+  topicTab: ''
 }
 
 export default new Vuex.Store({
