@@ -24,7 +24,7 @@
           <span v-else class="glyphicon glyphicon-thumbs-up" style="color:grey"></span>
         </a>
         <span v-show="reply.ups.length">{{reply.ups.length}}</span>
-        <a href="#" title="回复" @click.prevent="openReply(reply, idx)"><span class="glyphicon glyphicon-pencil"></span></a>
+        <a href="#" title="回复" @click.prevent="toggleReply(reply, idx)"><span class="glyphicon glyphicon-pencil"></span></a>
       </span>
       <div v-html="reply.content" />
       <div :class="'reply-wrapper ' + (idx == replyIdx ? 'flex on' : 'flex')">
@@ -64,13 +64,7 @@ export default {
   },
   props: ['id'],
   created () {
-    Indicator.open()
-    let accesstoken = this.isLogin ? '?accesstoken=' + this.token : ''
-    axios.get('https://cnodejs.org/api/v1/topic/' + this.id + accesstoken)
-    .then(res => {
-      this.details = res.data.data
-      Indicator.close()
-    })
+    this.loadTopic()
   },
   filters: {
     timeAgo (date) {
@@ -85,12 +79,24 @@ export default {
     ...mapState(['isLogin', 'token'])
   },
   methods: {
-    initTmpReply (name) {
-      this.tmpReply = `[@${name}](/user/${name})`
+    loadTopic () {
+      Indicator.open()
+      let accesstoken = this.isLogin ? '?accesstoken=' + this.token : ''
+      return axios.get('https://cnodejs.org/api/v1/topic/' + this.id + accesstoken)
+      .then(res => {
+        this.details = res.data.data
+        Indicator.close()
+      })
     },
-    openReply (reply, idx) {
+    initTmpReply (name) {
+      this.tmpReply = `[@${name}](/user/${name}) `
+    },
+    toggleReply (reply, idx) {
       if (!this.isLogin) {
         return Toast('尚未登录')
+      }
+      if (idx === -1) {
+        return
       }
       this.replyIdx = this.replyIdx === idx ? -1 : idx
       if (this.replyIdx > -1) {
@@ -116,8 +122,13 @@ export default {
       console.log('Posting ' + JSON.stringify(reply))
       return axios.post('https://cnodejs.org/api/v1/topic/' + this.id + '/replies', reply)
       .then(res => {
-        Toast('评论成功')
         this.submitAvaliable = true
+        this.loadTopic() // refresh topic
+        this.toggleReply(null, this.replyIdx) // close reply input
+        if (this.inputContent) {
+          this.inputContent = '' // clear if any text
+        }
+        Toast('评论成功')
       }).catch(err => {
         console.log(err)
         if (err.response && err.response.data) {
@@ -188,7 +199,6 @@ export default {
   }
 
   .reply {
-    border-bottom: 1px solid black;
     margin-bottom: 10px;
   }
 
