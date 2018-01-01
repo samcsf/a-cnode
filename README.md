@@ -1,30 +1,22 @@
 # a-cnode
 
 > A CNode forum client.
+![img](demo/home.jpeg)
 
-## Build Setup
+## Features
+- [x] Retrieve latest topic, pull/push to refresh/loadmore
+- [x] Login, remember login state
+- [x] View/manage collected topics
+- [x] View topic content, reply topic, quote reply
+- [x] Message notifiction, view message details
+- [x] View user details
+- [ ] Edit topic content
 
-``` bash
-# install dependencies
-npm install
+## Technology Stack
+Vue + Vuex + Vue-router + Webpack + Mint-ui
 
-# serve with hot reload at localhost:8080
-npm run dev
+## Data source
+Provided by [CNode Api](https://cnodejs.org/api).
 
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-
-# run unit tests
-npm run unit
-
-# run e2e tests
-npm run e2e
-
-# run all tests
-npm test
-```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+## License
+[MIT](https://github.com/samcsf/a-cnode/blob/master/LICENSE)
