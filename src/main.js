@@ -7,8 +7,8 @@ import store from './store'
 import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
 import '@/assets/github-markdown.css'
-import '@/assets/common.scss'
 import '/Users/sam/JS_Study/a-cnode/node_modules/bootstrap/dist/css/bootstrap.css'
+import '@/assets/common.scss'
 
 Vue.config.productionTip = false
 Vue.use(MintUI)

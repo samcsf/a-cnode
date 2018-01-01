@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <v-header/>
-    <router-view></router-view>
+    <router-view class="view-wrapper"></router-view>
     <v-footer/>
   </div>
 </template>
@@ -56,17 +56,11 @@ export default {
   box-sizing: border-box;
 }
 
-a {
-  text-decoration: none;
-}
-a:hover {
-  text-decoration: none;
-}
-a:focus {
-  text-decoration: none;
+body{
+  background-color: #f8f8f8;
 }
 
-body{
+.view-wrapper {
   background-color: #f8f8f8;
 }
 </style>

@@ -16,7 +16,9 @@
               <ul>
                 <li>发布于{{topic.create_at | timeAgo}}</li>
                 <li>-</li>
-                <li>来自{{topic.tab | getTabName}}</li>
+                <li>来自#{{topic.tab | getTabName}}</li>
+                <li v-if="topic.good"><span class="short-mark green">精</span></li>
+                <li v-if="topic.top"><span class="short-mark blue">顶</span></li>
               </ul>
             </div>
           </div>
