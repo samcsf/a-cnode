@@ -1,10 +1,6 @@
 <template>
-  <mt-loadmore :top-method="loadTop" ref="loadmore"> 
-    <ul id="topic-list"
-      v-infinite-scroll="loadMore"
-      infinite-scroll-disabled="loading"
-      infinite-scroll-distance="0"
-      infinite-scroll-immediate-check="false">
+    <mt-loadmore :top-method="loadTop" ref="loadmore"> 
+    <ul id="topic-list" >
       <li v-for="(topic, idx) in topics" :key="'topic'+idx">
         <div class="topic-cell">
           <div class="detail">
@@ -18,7 +14,6 @@
                 <li>-</li>
                 <li>来自#{{topic.tab | getTabName}}</li>
                 <li v-if="topic.good"><span class="short-mark green">精</span></li>
-                <li v-if="topic.top"><span class="short-mark blue">顶</span></li>
               </ul>
             </div>
           </div>
@@ -32,17 +27,8 @@
               <img class="icon" src="../../static/reply.png">
               {{topic.reply_count | numFilter}}
             </li>
-            <li v-show="topic.last_reply_avatar">
-              <img :src="topic.last_reply_avatar" class="avatar-tiny">
-              {{topic.last_reply_at | timeAgo}}
-            </li>
           </ul>
         </div>
-        <!-- <mt-cell :title="topic.title" :label="getViewState(topic)">
-          <span>{{topic.last_reply_at | timeAgo}}</span>
-          <img v-show="topic.last_reply_avatar" :src="topic.last_reply_avatar" class="avatar-small">
-          <img slot="icon" :src="topic.author.avatar_url" class="avatar-small">
-        </mt-cell> -->
       </li>
     </ul>
     <div v-show="loading" class="flex-center" style="margin-top: 10px">
@@ -55,7 +41,7 @@
 <script>
 import localeDate from '@/utils/date'
 import mapping from '@/utils/mapping'
-import {mapState, mapActions, mapMutations} from 'vuex'
+import {mapState, mapActions} from 'vuex'
 
 export default {
   data: function () {
@@ -63,25 +49,19 @@ export default {
       loading: false
     }
   },
+  created () {
+    this.fetchCollections()
+  },
   computed: {
-    ...mapState(['topics', 'topicPage'])
+    ...mapState({topics: 'collections'})
   },
   methods: {
-    ...mapActions(['fetchTopicsWithDetail']),
-    ...mapMutations(['initPage', 'nextPage']),
+    ...mapActions(['fetchCollections']),
     loadTop () {
-      this.initPage() // reset page!
-      return this.fetchTopicsWithDetail({page: this.topicPage, refresh: true})
+      return this.fetchCollections()
       .then(() => {
         this.$refs.loadmore.onTopLoaded()
       })
-    },
-    loadMore () {
-      this.loading = true
-      this.nextPage()
-      console.log('loading ' + this.topicPage)
-      return this.fetchTopicsWithDetail({page: this.topicPage, refresh: false})
-      .then(() => { this.loading = false })
     },
     formatNum (value) {
       if (value < 1000) {
@@ -113,12 +93,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-#topic-list {
-  margin-top: 5px;
-}
-
-
-  
-</style>

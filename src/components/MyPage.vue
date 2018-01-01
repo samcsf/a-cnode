@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div>
     <div class="acn-cell">
       <img class="avatar-circle" :src="user.avatar_url">
       <span class="content">{{user.loginname}}</span>
@@ -39,10 +39,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.wrapper{
-  height: calc(100vh - 90px);
-}
-
-</style>

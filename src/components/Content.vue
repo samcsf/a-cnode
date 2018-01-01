@@ -1,6 +1,7 @@
 <template>
   <div class="content-wrapper">
     <h1>{{details.title}}</h1>
+    <!--
     <div class="author-info">
       <img class="avatar-small" :src="details.author.avatar_url" />
       <router-link :to="'/user/' + details.author.loginname">{{details.author.loginname}}</router-link>
@@ -9,6 +10,29 @@
       <br>
       <span>{{details.visit_count}}阅读</span>
       <span>来自&nbsp{{details.tab | getTabName}}</span>
+    </div> -->
+    <div class="topic-cell">
+      <div class="detail">
+        <router-link :to="'/user/' + details.author.loginname">
+          <img :src="details.author.avatar_url" class="avatar-medium avatar">
+        </router-link>
+        <div class="content">
+          <router-link :to="'/user/' + details.author.loginname">{{details.author.loginname}}</router-link>
+          <ul>
+            <li>发布于{{details.create_at | timeAgo}}</li>
+            <li>-</li>
+            <li>来自#{{details.tab | getTabName}}</li>
+            <li v-if="details.good"><span class="short-mark green">精</span></li>
+            <li v-if="details.top"><span class="short-mark blue">顶</span></li>
+          </ul>
+        </div>
+      </div>
+      <div v-if="isLogin" style="width:100%; height: 10px;">
+        <div style="float:right;margin-top:-33px;">
+          <mt-button v-if="!details.is_collect" type="primary" @click="submitCollect">收藏文章</mt-button>
+          <mt-button v-else type="default" @click="submitCollect">取消收藏</mt-button>
+        </div>
+      </div>
     </div>
     <div v-html="details.content" class="content-body markdown-body"></div>
     <h1>评论</h1>
@@ -24,7 +48,7 @@
           <span v-else class="glyphicon glyphicon-thumbs-up" style="color:grey"></span>
         </a>
         <span v-show="reply.ups.length">{{reply.ups.length}}</span>
-        <a href="#" title="回复" @click.prevent="openReply(reply, idx)"><span class="glyphicon glyphicon-pencil"></span></a>
+        <a href="#" title="回复" @click.prevent="toggleReply(reply, idx)"><span class="glyphicon glyphicon-pencil"></span></a>
       </span>
       <div v-html="reply.content" />
       <div :class="'reply-wrapper ' + (idx == replyIdx ? 'flex on' : 'flex')">
@@ -64,13 +88,7 @@ export default {
   },
   props: ['id'],
   created () {
-    Indicator.open()
-    let accesstoken = this.isLogin ? '?accesstoken=' + this.token : ''
-    axios.get('https://cnodejs.org/api/v1/topic/' + this.id + accesstoken)
-    .then(res => {
-      this.details = res.data.data
-      Indicator.close()
-    })
+    this.loadTopic()
   },
   filters: {
     timeAgo (date) {
@@ -85,12 +103,24 @@ export default {
     ...mapState(['isLogin', 'token'])
   },
   methods: {
-    initTmpReply (name) {
-      this.tmpReply = `[@${name}](/user/${name})`
+    loadTopic () {
+      Indicator.open()
+      let accesstoken = this.isLogin ? '?accesstoken=' + this.token : ''
+      return axios.get('https://cnodejs.org/api/v1/topic/' + this.id + accesstoken)
+      .then(res => {
+        this.details = res.data.data
+        Indicator.close()
+      })
     },
-    openReply (reply, idx) {
+    initTmpReply (name) {
+      this.tmpReply = `[@${name}](/user/${name}) `
+    },
+    toggleReply (reply, idx) {
       if (!this.isLogin) {
         return Toast('尚未登录')
+      }
+      if (idx === -1) {
+        return
       }
       this.replyIdx = this.replyIdx === idx ? -1 : idx
       if (this.replyIdx > -1) {
@@ -116,8 +146,13 @@ export default {
       console.log('Posting ' + JSON.stringify(reply))
       return axios.post('https://cnodejs.org/api/v1/topic/' + this.id + '/replies', reply)
       .then(res => {
-        Toast('评论成功')
         this.submitAvaliable = true
+        this.loadTopic() // refresh topic
+        this.toggleReply(null, this.replyIdx) // close reply input
+        if (this.inputContent) {
+          this.inputContent = '' // clear if any text
+        }
+        Toast('评论成功')
       }).catch(err => {
         console.log(err)
         if (err.response && err.response.data) {
@@ -147,6 +182,39 @@ export default {
           Toast('取消点赞')
           reply.is_uped = false
           reply.ups.pop()
+        }
+        this.submitAvaliable = true
+      }).catch(err => {
+        console.log(err)
+        if (err.response && err.response.data) {
+          Toast('错误:' + err.response.data.error_msg)
+        } else {
+          Toast('操作失败')
+        }
+        this.submitAvaliable = true
+      })
+    },
+    submitCollect () {
+      let op = 'collect'
+      if (!!this.details.is_collect) {
+        op = 'de_collect'
+      }
+      if (!this.submitAvaliable) {
+        return Toast('操作进行中，请稍等重试')
+      }
+      this.submitAvaliable = false
+      let data = {
+        accesstoken: this.token,
+        topic_id: this.id
+      }
+      return axios.post('https://cnodejs.org/api/v1/topic_collect/' + op, data)
+      .then(res => {
+        if (op === 'collect') {
+          Toast('收藏成功')
+          this.details.is_collect = true
+        } else {
+          Toast('成功取消')
+          this.details.is_collect = false
         }
         this.submitAvaliable = true
       }).catch(err => {
@@ -188,7 +256,6 @@ export default {
   }
 
   .reply {
-    border-bottom: 1px solid black;
     margin-bottom: 10px;
   }
 

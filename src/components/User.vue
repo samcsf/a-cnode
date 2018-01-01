@@ -9,11 +9,11 @@
       </div>
     </div>
     <div class="info-block">
-      <span class="info-header">最近创建的话题</span>
+      <span class="info-entry header">最近创建的话题</span>
       <router-link class="info-entry" v-for="(topic, idx) in user.recent_topics" :to="'/topic/' + topic.id" :key="idx">{{topic.title}}</router-link>
     </div>
     <div class="info-block">
-      <span class="info-header">最近参与的话题</span>
+      <span class="info-entry header">最近参与的话题</span>
       <router-link class="info-entry" v-for="(topic, idx) in user.recent_replies" :to="'/topic/' + topic.id" :key="idx">{{topic.title}}</router-link>
     </div>
   </div>
@@ -48,7 +48,7 @@ export default {
 
 <style lang="scss">
   .user-wrapper {
-    margin-top: 60px;
+    padding-top: 20px;
   }
   .user-info {
     display: flex;

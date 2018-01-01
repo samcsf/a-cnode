@@ -20,7 +20,8 @@ const state = {
     pageLimit: 20
   },
   topicPage: 1,
-  topicTab: ''
+  topicTab: '',
+  collections: []
 }
 
 export default new Vuex.Store({

@@ -47,7 +47,7 @@ export default {
       Indicator.open('加载中')
       this.initPage()
       return this.fetchTopicsWithDetail({page: 1, refresh: true})
-      .then(()=>Indicator.close())
+      .then(() => Indicator.close())
     }
   }
 }

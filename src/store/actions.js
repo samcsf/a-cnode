@@ -73,6 +73,12 @@ export default {
       }
     })
   },
+  fetchCollections: async function ({commit, state}) {
+    return axios.get('https://cnodejs.org/api/v1/topic_collect/' + state.user.loginname)
+    .then(res => {
+      commit('refreshCollections', res.data.data)
+    }).catch(err => console.log(err))
+  },
   getMessages: async function ({commit, state}, opts) {
     return axios.get('https://cnodejs.org/api/v1/messages?accesstoken=' + state.token)
     .then(res => {
