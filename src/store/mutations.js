@@ -28,5 +28,9 @@ export default {
   },
   switchTab: function (state, tab) {
     state.topicTab = tab
+  },
+  refreshCollections: function (state, collections) {
+    state.collections.splice(0)
+    state.collections = collections
   }
 }

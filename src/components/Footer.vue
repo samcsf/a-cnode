@@ -28,9 +28,9 @@ export default {
           class: 'glyphicon glyphicon-envelope'
         },
         {
-          id: 'collection',
+          id: 'collections',
           name: '收藏',
-          path: '/collection',
+          path: '/collections',
           class: 'glyphicon glyphicon-star'
         },
         {

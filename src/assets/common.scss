@@ -116,3 +116,50 @@ a:visited {
 .green {
   background-color: lightgreen;
 }
+
+.topic-cell {
+  background-color: white;
+  border-bottom: 1px solid lightgray;
+  margin-bottom: 5px;
+  padding: 5px;
+  .detail {
+    display: flex;
+    flex-direction: row;
+    .avatar {
+    }
+    .content {
+      display: flex;
+      flex-direction: column;
+      padding-left: 5px;
+      font-size: 10px;
+      a {
+        color: #00a1d6;
+        text-decoration: none;
+      }
+    }
+  }
+  .title {
+    display: block;
+    font-size: 18px;
+    color: #2c3e50;
+    text-decoration: none;
+  }
+  ul {
+    display: inline;
+  }
+  li {
+    color: #7f8c8d;
+    display: inline-block;
+  }
+  .last-reply {
+    margin-left: 50px;
+  }
+  .view-state {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    li {
+      margin-right: 5px;
+    }
+  }
+}

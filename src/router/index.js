@@ -7,6 +7,7 @@ import MyPage from '@/components/MyPage'
 import Login from '@/components/Login'
 import Messages from '@/components/Messages'
 import Post from '@/components/Post'
+import Collections from '@/components/Collections'
 import store from '../store'
 import { Toast } from 'mint-ui'
 
@@ -50,8 +51,10 @@ export default new Router({
       beforeEnter: loginCheck
     },
     {
-      path: '/collection',
-      name: 'collection'
+      path: '/collections',
+      name: 'collections',
+      component: Collections,
+      beforeEnter: loginCheck
     },
     {
       path: '/mypage',

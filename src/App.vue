@@ -61,6 +61,7 @@ body{
 }
 
 .view-wrapper {
+  min-height: calc(100vh - 90px);
   background-color: #f8f8f8;
 }
 </style>
