@@ -1,7 +1,7 @@
 # a-cnode
 
 > A CNode forum client.  
-![img](demo/home.jpeg)
+![img](demo/home.png)
 
 ## Features
 - [x] Retrieve latest topic, pull/push to refresh/loadmore
